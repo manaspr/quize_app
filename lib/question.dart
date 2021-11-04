@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 class Questions extends StatelessWidget {
   final String questionText;
-
   Questions(this.questionText);
 
   @override

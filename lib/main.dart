@@ -10,33 +10,41 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  var question = [
+    {
+      'questionText': 'what is your fav color?',
+      'answer': ['red', 'black', 'yellow', 'blue']
+    },
+    {
+      'questionText': 'what is your fav animal?',
+      'answer': ['cow', 'dog', 'cat', 'tiger']
+    },
+    {
+      'questionText': 'what is your fav sports?',
+      'answer': ['cricket', 'football', 'badminton', 'cram']
+    },
+    {
+      'questionText': 'what is your fav laptop?',
+      'answer': ['asus', 'hp', 'dell', 'lenevo']
+    },
+  ];
   var _answerIndex = 0;
   void _answerQuestion() {
     setState(() {
       _answerIndex = _answerIndex + 1;
     });
+
+    print(_answerIndex);
+
+    if (_answerIndex < question.length) {
+      print('you have more questions');
+    } else {
+      print('you are done!');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    var question = [
-      {
-        'questionText': 'what is your fav color?',
-        'answer': ['red', 'black', 'yellow', 'blue']
-      },
-      {
-        'questionText': 'what is your fav animal?',
-        'answer': ['cow', 'dog', 'cat', 'tiger']
-      },
-      {
-        'questionText': 'what is your fav sports?',
-        'answer': ['cricket', 'football', 'badminton', 'cram']
-      },
-      {
-        'questionText': 'what is your fav laptop?',
-        'answer': ['asus', 'hp', 'dell', 'lenevo']
-      },
-    ];
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -45,15 +53,19 @@ class _QuizState extends State<Quiz> {
           title: Text('Quiz'),
         ),
         body: Center(
-          child: Column(
-            children: [
-              Questions(question[_answerIndex]['questionText'] as String),
-              ...(question[_answerIndex]['answer'] as List<String>)
-                  .map((answer) {
-                return Answers(_answerQuestion, answer);
-              }).toList(),
-            ],
-          ),
+          child: _answerIndex < question.length
+              ? Column(
+                  children: [
+                    Questions(question[_answerIndex]['questionText'] as String),
+                    ...(question[_answerIndex]['answer'] as List<String>)
+                        .map((answer) {
+                      return Answers(_answerQuestion, answer);
+                    }).toList(),
+                  ],
+                )
+              : Center(
+                  child: Text('This Quiz is completed'),
+                ),
         ),
       ),
     );
